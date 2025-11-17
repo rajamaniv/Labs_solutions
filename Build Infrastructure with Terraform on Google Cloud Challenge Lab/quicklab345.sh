@@ -141,7 +141,7 @@ cd modules/storage/
 cat > storage.tf <<EOF
 
 resource "google_storage_bucket" "storage-bucket" {
-  name          = "$BUCKET_NAME"
+  name          = "tf-bucket-068799"
   location      = "US"
   force_destroy = true
   uniform_bucket_level_access = true
@@ -187,7 +187,7 @@ cat > main.tf <<EOF
 
 terraform {
   backend "gcs" {
-    bucket  = "$BUCKET_NAME"
+    bucket  = "tf-bucket-068799"
  prefix  = "terraform/state"
   }
   required_providers {
@@ -265,8 +265,8 @@ resource "google_compute_instance" "tf-instance-2" {
   allow_stopping_for_update = true
 }
 
-resource "google_compute_instance" "$INSTANCE_NAME" {
-  name         = "$INSTANCE_NAME"
+resource "google_compute_instance" "tf-instance-238913" {
+  name         = "tf-instance-238913"
   machine_type = "e2-standard-2"
   zone         = "$ZONE"
 
@@ -292,7 +292,7 @@ terraform init
 terraform apply --auto-approve
 
 
-terraform taint module.instances.google_compute_instance.$INSTANCE_NAME
+terraform taint module.instances.google_compute_instance.tf-instance-238913
 
 terraform plan
 terraform apply --auto-approve
@@ -352,7 +352,7 @@ cat > main.tf <<EOF
 
 terraform {
   backend "gcs" {
-    bucket  = "$BUCKET_NAME"
+    bucket  = "tf-bucket-068799"
  prefix  = "terraform/state"
   }
   required_providers {
@@ -385,7 +385,7 @@ module "vpc" {
     version = "~> 6.0.0"
 
     project_id   = "$PROJECT_ID"
-    network_name = "$VPC_NAME"
+    network_name = "tf-vpc-422399"
     routing_mode = "GLOBAL"
 
     subnets = [
@@ -427,7 +427,7 @@ resource "google_compute_instance" "tf-instance-1" {
   }
 
   network_interface {
-    network = "$VPC_NAME"
+    network = "tf-vpc-422399"
      subnetwork = "subnet-01"
   }
   metadata_startup_script = <<-EOT
@@ -448,7 +448,7 @@ resource "google_compute_instance" "tf-instance-2" {
   }
 
   network_interface {
-    network = "$VPC_NAME"
+    network = "tf-vpc-422399"
      subnetwork = "subnet-02"
   }
   metadata_startup_script = <<-EOT
@@ -463,7 +463,7 @@ module "vpc" {
     version = "~> 6.0.0"
 
     project_id   = "$PROJECT_ID"
-    network_name = "$VPC_NAME"
+    network_name = "tf-vpc-422399"
     routing_mode = "GLOBAL"
 
     subnets = [
@@ -495,7 +495,7 @@ cat > main.tf <<EOF
 
 terraform {
   backend "gcs" {
-    bucket  = "$BUCKET_NAME"
+    bucket  = "tf-bucket-068799"
  prefix  = "terraform/state"
   }
   required_providers {
@@ -528,7 +528,7 @@ module "vpc" {
     version = "~> 6.0.0"
 
     project_id   = "$PROJECT_ID"
-    network_name = "$VPC_NAME"
+    network_name = "tf-vpc-422399"
     routing_mode = "GLOBAL"
 
     subnets = [
@@ -543,7 +543,7 @@ module "vpc" {
             subnet_region         = "$REGION"
             subnet_private_access = "true"
             subnet_flow_logs      = "true"
-            description           = "Please like share & subscribe to quicklab"
+            #description           = "Please like share & subscribe to quicklab"
         },
     ]
 }
@@ -552,7 +552,7 @@ module "vpc" {
 
 resource "google_compute_firewall" "tf-firewall"{
   name    = "tf-firewall"
- network = "projects/$PROJECT_ID/global/networks/$VPC_NAME"
+ network = "projects/$PROJECT_ID/global/networks/tf-vpc-422399"
 
   allow {
     protocol = "tcp"
